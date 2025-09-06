@@ -1,0 +1,44 @@
+plugins {
+    id 'groovy-gradle-plugin'
+}
+
+allprojects {
+    apply plugin: 'java'
+}
+
+subprojects {
+    apply plugin: 'java'
+
+    group 'com.pruebatecnica.bisa'
+    version '0.0.1-SNAPSHOT'
+
+    repositories {
+        mavenLocal()
+        mavenCentral()
+    }
+
+    configurations {
+        compileOnly.extendsFrom annotationProcessor
+        testCompileOnly.extendsFrom annotationProcessor
+        testAnnotationProcessor.extendsFrom annotationProcessor
+    }
+
+    dependencies {
+        annotationProcessor 'org.projectlombok:lombok:1.18.20'
+        implementation group: 'javax.persistence', name: 'javax.persistence-api', version: '2.2'
+    }
+
+    ext {
+        set('springCloudVersion', "Hoxton.SR10")
+    }
+
+    test {
+        useJUnitPlatform()
+    }
+
+    sourceCompatibility = 11
+}
+
+repositories {
+    gradlePluginPortal()
+}

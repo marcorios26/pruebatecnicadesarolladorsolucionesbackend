@@ -1,6 +1,6 @@
 package com.pruebatecnica.bisa.blog.services;
 
-import com.pruebatecnica.bisa.blog.apis.CreateCommentRequest;
+import com.pruebatecnica.bisa.blog.apis.request.CreateCommentRequest;
 import com.pruebatecnica.bisa.blog.dtos.CommentDto;
 import com.pruebatecnica.bisa.blog.entities.Blog;
 import com.pruebatecnica.bisa.blog.entities.Comment;
@@ -22,21 +22,6 @@ public class CommentService {
         this.commentRepository = commentRepository;
         this.blogRepository = blogRepository;
     }
-
-//    public List<CommentDto> getAllCommentsByIdBlog(long idBlog) {
-//        return commentRepository.findAllByIdBlog(idBlog)
-//                .stream()
-//                .map(comment -> {
-//                    CommentDto dto = new CommentDto();
-//                    dto.setId(comment.getId());
-//                    dto.setBlog(comment.getBlog());
-//                    dto.setContent(comment.getContent());
-//                    dto.setWriterName(comment.getWriterName());
-//                    dto.setWriterEmail(comment.getWriterEmail());
-//                    dto.setWriterPunctuation(comment.getWriterPunctuation());
-//                    return dto;
-//                }).collect(Collectors.toList());
-//    }
 
     public CommentDto createComment(CreateCommentRequest request) {
         Blog blog = blogRepository.findById(request.getBlogId())
@@ -62,7 +47,7 @@ public class CommentService {
         dto.setWriterName(savedComment.getWriterName());
         dto.setWriterEmail(savedComment.getWriterEmail());
         dto.setWriterPunctuation(savedComment.getWriterPunctuation());
-
+        dto.setBlog(savedComment.getBlog());
         return dto;
     }
 

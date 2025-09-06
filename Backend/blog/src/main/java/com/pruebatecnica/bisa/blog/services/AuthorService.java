@@ -1,6 +1,6 @@
 package com.pruebatecnica.bisa.blog.services;
 
-import com.pruebatecnica.bisa.blog.apis.CreateAuthorRequest;
+import com.pruebatecnica.bisa.blog.apis.request.CreateAuthorRequest;
 import com.pruebatecnica.bisa.blog.dtos.AuthorDto;
 import com.pruebatecnica.bisa.blog.entities.Author;
 import com.pruebatecnica.bisa.blog.repositories.AuthorRepository;
@@ -25,7 +25,6 @@ public class AuthorService {
                 .stream()
                 .map(author -> {
             AuthorDto dto = new AuthorDto();
-            dto.setId(author.getId());
             dto.setFirstName(author.getFirstName());
             dto.setLastName(author.getLastName());
             dto.setSecondLastName(author.getSecondLastName());

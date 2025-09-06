@@ -1,7 +1,7 @@
 package com.pruebatecnica.bisa.blog.services;
 
-import com.pruebatecnica.bisa.blog.apis.CreateBlogRequest;
-import com.pruebatecnica.bisa.blog.apis.UpdateBlogRequest;
+import com.pruebatecnica.bisa.blog.apis.request.CreateBlogRequest;
+import com.pruebatecnica.bisa.blog.apis.request.UpdateBlogRequest;
 import com.pruebatecnica.bisa.blog.dtos.BlogDto;
 import com.pruebatecnica.bisa.blog.entities.Author;
 import com.pruebatecnica.bisa.blog.entities.Blog;
@@ -101,6 +101,7 @@ public class BlogService {
         history.setContent(blog.getContent());
         history.setAllowComments(blog.isAllowComments());
         history.setPeriodicity(blog.getPeriodicity());
+        history.setBlogId(blog.getId());
         history.setUpdatedAt(LocalDateTime.now());
 
         blogHistoryRepository.save(history);

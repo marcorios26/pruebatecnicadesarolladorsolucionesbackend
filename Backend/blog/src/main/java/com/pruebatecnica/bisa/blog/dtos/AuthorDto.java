@@ -3,10 +3,11 @@ package com.pruebatecnica.bisa.blog.dtos;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
+
 @Getter
 @Setter
 public class AuthorDto {
-    private long id;
 
     private String firstName;
 
@@ -14,7 +15,7 @@ public class AuthorDto {
 
     private String secondLastName;
 
-    private String birthday;
+    private LocalDate birthday;
 
     private String residenceCountry;
 

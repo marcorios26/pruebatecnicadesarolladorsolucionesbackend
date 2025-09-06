@@ -1,10 +1,10 @@
-package com.pruebatecnica.bisa.blog.apis;
+package com.pruebatecnica.bisa.blog.apis.request;
 
-import com.pruebatecnica.bisa.blog.entities.Author;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 /**
  * @author: Marco Rios
@@ -12,22 +12,21 @@ import javax.validation.constraints.NotBlank;
 @Getter
 @Setter
 public class CreateBlogRequest {
-    @NotBlank
+    @NotNull(message = "Author ID is required")
     private long authorId;
 
-    @NotBlank
+    @NotBlank(message = "Content is required")
     private String content;
 
-    @NotBlank
+    @NotBlank(message = "Periodicity is required")
     private String periodicity;
 
-    @NotBlank
+    @NotBlank(message = "Title is required")
     private String title;
 
-    @NotBlank
+    @NotBlank(message = "Topic is required")
     private String topic;
 
-    @NotBlank
     private boolean allowComments;
 
     public boolean isAllowComments() {

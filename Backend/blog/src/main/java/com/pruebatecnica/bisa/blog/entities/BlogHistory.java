@@ -4,6 +4,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 @Getter
@@ -16,12 +18,21 @@ public class BlogHistory {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotNull
     private Long blogId;
 
+    @NotBlank
     private String title;
+
+    @NotBlank
     private String topic;
+
+    @NotBlank
     private String content;
+
     private boolean allowComments;
+
+    @NotBlank
     private String periodicity;
 
     private LocalDateTime updatedAt;

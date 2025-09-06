@@ -1,16 +1,19 @@
 package com.pruebatecnica.bisa.blog.services;
 
 import com.pruebatecnica.bisa.blog.apis.CreateBlogRequest;
+import com.pruebatecnica.bisa.blog.apis.UpdateBlogRequest;
 import com.pruebatecnica.bisa.blog.dtos.BlogDto;
 import com.pruebatecnica.bisa.blog.entities.Author;
 import com.pruebatecnica.bisa.blog.entities.Blog;
+import com.pruebatecnica.bisa.blog.entities.BlogHistory;
 import com.pruebatecnica.bisa.blog.repositories.AuthorRepository;
+import com.pruebatecnica.bisa.blog.repositories.BlogHistoryRepository;
 import com.pruebatecnica.bisa.blog.repositories.BlogRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,10 +24,14 @@ public class BlogService {
     @Autowired
     private final AuthorRepository authorRepository;
 
+    @Autowired
+    private final BlogHistoryRepository blogHistoryRepository;
 
-    public BlogService(BlogRepository blogRepository, AuthorRepository authorRepository) {
+
+    public BlogService(BlogRepository blogRepository, AuthorRepository authorRepository, BlogHistoryRepository blogHistoryRepository) {
         this.blogRepository = blogRepository;
         this.authorRepository = authorRepository;
+        this.blogHistoryRepository = blogHistoryRepository;
     }
 
     public List<BlogDto> getAllBlogs() {
@@ -81,5 +88,40 @@ public class BlogService {
                     return dto;
                 })
                 .orElseThrow(() -> new RuntimeException("Blog not found with id " + blogId));
+    }
+
+    public BlogDto updateBlog(Long blogId, UpdateBlogRequest request) {
+
+        Blog blog = blogRepository.findById(blogId)
+                .orElseThrow(() -> new RuntimeException("Blog not found"));
+
+        BlogHistory history = new BlogHistory();
+        history.setTitle(blog.getTitle());
+        history.setTopic(blog.getTopic());
+        history.setContent(blog.getContent());
+        history.setAllowComments(blog.isAllowComments());
+        history.setPeriodicity(blog.getPeriodicity());
+        history.setUpdatedAt(LocalDateTime.now());
+
+        blogHistoryRepository.save(history);
+
+
+        blog.setTitle(request.getTitle());
+        blog.setTopic(request.getTopic());
+        blog.setContent(request.getContent());
+        blog.setAllowComments(request.isAllowComments());
+        blog.setPeriodicity(request.getPeriodicity());
+        Blog updatedBlog = blogRepository.save(blog);
+
+        BlogDto dto = new BlogDto();
+        dto.setId(updatedBlog.getId());
+        dto.setAuthor(updatedBlog.getAuthor());
+        dto.setTitle(updatedBlog.getTitle());
+        dto.setTopic(updatedBlog.getTopic());
+        dto.setPeriodicity(updatedBlog.getPeriodicity());
+        dto.setComments(updatedBlog.getComments());
+        dto.setAllowComments(updatedBlog.isAllowComments());
+        dto.setContent(updatedBlog.getContent());
+        return dto;
     }
 }

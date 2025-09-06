@@ -1,6 +1,7 @@
 package com.pruebatecnica.bisa.blog.controllers;
 
 import com.pruebatecnica.bisa.blog.apis.CreateBlogRequest;
+import com.pruebatecnica.bisa.blog.apis.UpdateBlogRequest;
 import com.pruebatecnica.bisa.blog.dtos.AuthorDto;
 import com.pruebatecnica.bisa.blog.dtos.BlogDto;
 import com.pruebatecnica.bisa.blog.services.AuthorService;
@@ -35,6 +36,13 @@ public class BlogController {
     public ResponseEntity<BlogDto> getBlog(@PathVariable long blogId)
     {
         BlogDto blog = blogService.getBlog(blogId);
+        return new ResponseEntity<>(blog, HttpStatus.OK);
+    }
+
+    @PutMapping("/updateBlog/{blogId}")
+    public ResponseEntity<BlogDto> updateBlog(@PathVariable long blogId, @RequestBody UpdateBlogRequest request)
+    {
+        BlogDto blog = blogService.updateBlog(blogId, request);
         return new ResponseEntity<>(blog, HttpStatus.OK);
     }
 }
